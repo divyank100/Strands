@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1019894090534",
+    "project_id": "strands-109c2",
+    "storage_bucket": "strands-109c2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019894090534:android:e9f90ecdfe9dbe794a8fe7",
+        "android_client_info": {
+          "package_name": "com.div.threads"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMfT6p7-iRD8y6Vk_EirS-2kY3gnT1NBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
