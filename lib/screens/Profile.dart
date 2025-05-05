@@ -9,6 +9,8 @@ import 'package:threads_clone/screens/Settings.dart';
 import 'package:threads_clone/services/auth/auth_service.dart';
 import 'package:threads_clone/services/database/database_provider.dart';
 
+import '../navigation/navigation.dart';
+
 class Profile extends StatefulWidget {
   String uid;
 
@@ -116,18 +118,32 @@ class _ProfileState extends State<Profile> {
             ),
           ),
 
-          SizedBox(height: 10),
-
           Biobox(text: isLoading ? "..." : user!.bio),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 10),
+            child: Text(
+              "Posts",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 16,
+              ),
+            ),
+          ),
 
           userAllPosts.isEmpty
               ? Center(child: Text("No posts yet"))
               : ListView.builder(
                 itemCount: userAllPosts.length,
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final post = listeningProvider.allPosts[index];
-                  return Posttile(post: post);
+                  return Posttile(
+                    post: post,
+                    onUserTap: () {},
+                    onPostTap: () => navigateToPost(context, post),
+                  );
                 },
               ),
         ],

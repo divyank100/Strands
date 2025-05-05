@@ -95,10 +95,40 @@ class DatabaseService {
   // Like post
 
   // Delete a post
-
-  // Get individual post
+  Future<void> deletePostFromFirebase(String postId) async {
+    try {
+      await _db.collection("Posts").doc(postId).delete();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   //   Likes
+  Future<void> likeToggleInFirebase(String postId) async {
+    try {
+      String uid = _auth.currentUser!.uid;
+      DocumentReference postDoc = _db.collection("Posts").doc(postId);
+      await _db.runTransaction((transaction) async {
+        DocumentSnapshot postSnapshot = await transaction.get(postDoc);
+        List<String> likedBy = List<String>.from(postSnapshot['likedBy'] ?? []);
+        int currentLikeCount = postSnapshot['likeCount'];
+
+        if (!likedBy.contains(uid)) {
+          likedBy.add(uid);
+          currentLikeCount++;
+        } else {
+          likedBy.remove(uid);
+          currentLikeCount--;
+        }
+        transaction.update(postDoc, {
+          'likeCount': currentLikeCount,
+          'likedBy': likedBy,
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   // Comments
 

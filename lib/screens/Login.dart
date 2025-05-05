@@ -24,9 +24,9 @@ class _LoginState extends State<Login> {
     try {
       showLoader(context);
       await _auth.loginEmailPassword(email.text, password.text);
-      hideLoader(context);
+      if(mounted) hideLoader(context);
     } catch (e) {
-      hideLoader(context);
+      if(mounted) hideLoader(context);
       Fluttertoast.showToast(
         msg: e.toString(),
         toastLength: Toast.LENGTH_SHORT,
