@@ -35,7 +35,7 @@ class Post {
     );
   }
 
-  // UserProfile to Firebase document(Map)
+  // Post to Firebase document(Map)
   Map<String, dynamic> toMap() {
     return {
       'id': id,

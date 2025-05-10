@@ -30,7 +30,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: AuthGate(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => AuthGate()
+      },
       debugShowCheckedModeBanner: false,
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:threads_clone/components/SettingsTile.dart';
+import 'package:threads_clone/navigation/navigation.dart';
 import 'package:threads_clone/services/auth/auth_service.dart';
 import 'package:threads_clone/themes/theme_provider.dart';
 
@@ -45,13 +46,17 @@ class Settings extends StatelessWidget {
           SettingTile(
             title: "Blocked Users",
             action: Icon(Icons.arrow_forward),
-            onTap: () {},
+            onTap: () {
+              navigateToBlockedUsers(context);
+            },
           ),
 
           SettingTile(
             title: "Account Settings",
             action: Icon(Icons.arrow_forward),
-            onTap: () {},
+            onTap: () {
+              navigateToAccountSettings(context);
+            },
           ),
 
           SettingTile(

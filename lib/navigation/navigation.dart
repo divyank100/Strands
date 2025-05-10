@@ -4,6 +4,8 @@ import 'package:threads_clone/screens/PostScreen.dart';
 import 'package:threads_clone/screens/Profile.dart';
 
 import '../models/post.dart';
+import '../screens/AccountSettings.dart';
+import '../screens/BlockedUsersScreen.dart';
 
 void navigateToUserProfile(BuildContext context, String uid) {
   Navigator.push(
@@ -16,5 +18,19 @@ void navigateToPost(BuildContext context, Post post) {
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => PostScreen(post: post)),
+  );
+}
+
+void navigateToBlockedUsers(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => BlockedUsersScreen()),
+  );
+}
+
+void navigateToAccountSettings(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => AccountSettings()),
   );
 }

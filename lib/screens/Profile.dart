@@ -107,13 +107,14 @@ class _ProfileState extends State<Profile> {
                     fontSize: 16,
                   ),
                 ),
-                GestureDetector(
-                  onTap: showEditBio,
-                  child: Icon(
-                    Icons.edit,
-                    color: Theme.of(context).colorScheme.primary,
+                if (user !=null && user!.uid == currentUserId)
+                  GestureDetector(
+                    onTap: showEditBio,
+                    child: Icon(
+                      Icons.edit,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

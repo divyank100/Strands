@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:threads_clone/services/database/database_service.dart';
 
 import 'auth_gate.dart';
 
@@ -50,5 +51,12 @@ class AuthService {
   }
 
   // Delete account
-
+  Future<void> deleteAccount() async{
+    User? user= getCurrentUser();
+    if(user != null){
+      // delete user's fata from firestore
+      await DatabaseService().deleteUserInfoFromFirebase(user.uid);
+      await user.delete();
+    }
+  }
 }
