@@ -1,4 +1,5 @@
-**Strands**
+
+## Strands
 
 
 
@@ -6,7 +7,7 @@ A Flutter-based thread-clone application where users can create posts, comment, 
 
 
 
-**Table of Contents**
+## Table of Contents
 
 - Demo
 - Features
