@@ -59,83 +59,87 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.lock_open_rounded,
-              size: 120,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0),
-              child: Text(
-                "Let's create an account for you!",
-                style: TextStyle(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_open_rounded,
+                  size: 120,
                   color: Theme.of(context).colorScheme.primary,
-                  fontSize: 16,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            CustomTextField(
-              controller: name,
-              obscureText: false,
-              hintText: "Enter Name",
-            ),
-
-            CustomTextField(
-              controller: email,
-              obscureText: false,
-              hintText: "Enter Email",
-            ),
-
-            CustomTextField(
-              controller: password,
-              obscureText: true,
-              hintText: "Enter Password",
-            ),
-
-            CustomTextField(
-              controller: confirmPassword,
-              obscureText: true,
-              hintText: "Confirm Password",
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 35.0,
-                horizontal: 15,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: 65,
-                child: CupertinoButton(
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Text(
-                    "Register",
+                    "Let's create an account for you!",
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            
+                CustomTextField(
+                  controller: name,
+                  obscureText: false,
+                  hintText: "Enter Name",
+                ),
+            
+                CustomTextField(
+                  controller: email,
+                  obscureText: false,
+                  hintText: "Enter Email",
+                ),
+            
+                CustomTextField(
+                  controller: password,
+                  obscureText: true,
+                  hintText: "Enter Password",
+                ),
+            
+                CustomTextField(
+                  controller: confirmPassword,
+                  obscureText: true,
+                  hintText: "Confirm Password",
+                ),
+            
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 35.0,
+                    horizontal: 15,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 65,
+                    child: CupertinoButton(
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: registerUser,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  onPressed: registerUser,
-                  color: Theme.of(context).colorScheme.secondary,
                 ),
-              ),
-            ),
-            GestureDetector(
-              onTap: widget.togglePage,
-              child: Text(
-                "Already a member? Login now.",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: widget.togglePage,
+                  child: Text(
+                    "Already a member? Login now.",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-                textAlign: TextAlign.right,
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

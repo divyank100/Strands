@@ -48,4 +48,9 @@ class Post {
       'likeCount': likeCount,
     };
   }
+
+  @override
+  String toString() {
+    return 'Post(id: $id, uid: $uid, message: $message, likedBy: $likedBy, name: $name, userName: $userName, timestamp: $timestamp, likeCount: $likeCount)';
+  }
 }

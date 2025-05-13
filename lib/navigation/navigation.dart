@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:threads_clone/screens/Home.dart';
 import 'package:threads_clone/screens/PostScreen.dart';
 import 'package:threads_clone/screens/Profile.dart';
 
@@ -32,5 +33,13 @@ void navigateToAccountSettings(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => AccountSettings()),
+  );
+}
+
+void navigateToAllPosts(BuildContext context) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (context) => Home()),
+    (route) => route.isFirst,
   );
 }

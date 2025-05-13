@@ -43,90 +43,94 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.lock_open_rounded,
-              size: 120,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0),
-              child: Text(
-                "Welcome back , you've been missed",
-                style: TextStyle(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_open_rounded,
+                  size: 120,
                   color: Theme.of(context).colorScheme.primary,
-                  fontSize: 16,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            CustomTextField(
-              controller: email,
-              obscureText: false,
-              hintText: "Enter Email",
-            ),
-
-            CustomTextField(
-              controller: password,
-              obscureText: true,
-              hintText: "Enter Password",
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 5.0,
-                horizontal: 15,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Forgot Password?",
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  child: Text(
+                    "Welcome back , you've been missed",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                CustomTextField(
+                  controller: email,
+                  obscureText: false,
+                  hintText: "Enter Email",
+                ),
+            
+                CustomTextField(
+                  controller: password,
+                  obscureText: true,
+                  hintText: "Enter Password",
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 15,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 35.0,
+                    horizontal: 15,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 65,
+                    child: CupertinoButton(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        login();
+                      },
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: widget.togglePage,
+                  child: Text(
+                    "Not a member? Register now.",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.right,
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 35.0,
-                horizontal: 15,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: 65,
-                child: CupertinoButton(
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    login();
-                  },
-                  color: Theme.of(context).colorScheme.secondary,
                 ),
-              ),
+              ],
             ),
-            GestureDetector(
-              onTap: widget.togglePage,
-              child: Text(
-                "Not a member? Register now.",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.right,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

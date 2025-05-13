@@ -5,6 +5,8 @@ import 'package:threads_clone/components/BottomNavBar.dart';
 import 'package:threads_clone/components/InputAlertBox.dart';
 import 'package:threads_clone/screens/AllPosts.dart';
 import 'package:threads_clone/screens/Profile.dart';
+import 'package:threads_clone/screens/Search.dart';
+import 'package:threads_clone/screens/Settings.dart';
 import 'package:threads_clone/services/auth/auth_service.dart';
 
 import '../services/database/database_provider.dart';
@@ -31,10 +33,10 @@ class _HomeState extends State<Home> {
     super.initState();
     screens = [
       AllPosts(),
-      AllPosts(),
-      AllPosts(),
+      Search(),
       AllPosts(),
       Profile(uid: auth.getCurrentUserId()),
+      Settings()
     ];
   }
 

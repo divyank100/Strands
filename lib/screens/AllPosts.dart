@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:threads_clone/components/PostTile.dart';
+import 'package:threads_clone/models/post.dart';
 import 'package:threads_clone/navigation/navigation.dart';
 import 'package:threads_clone/services/database/database_provider.dart';
 
@@ -28,30 +29,49 @@ class _AllPostsState extends State<AllPosts> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("H O M E"),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        foregroundColor: Theme.of(context).colorScheme.primary,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("H O M E"),
+          leading: null,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          bottom: TabBar(
+            labelColor: Theme.of(context).colorScheme.inversePrimary,
+            unselectedLabelColor: Theme.of(context).colorScheme.primary,
+            indicatorColor: Theme.of(context).colorScheme.secondary,
+            dividerColor: Colors.transparent,
+            tabs: [Tab(text: "For you"), Tab(text: "Following")],
+          ),
+        ),
+        body: TabBarView(children: [
+          _buildPostList(databaseListener.allPosts),
+          _buildPostList(databaseListener.followingPosts)
+        ])
       ),
-      body:
-          databaseListener.allPosts.isEmpty
-              ? Center(child: Text("Nothing to show up here!"))
-              : ListView.builder(
-                itemCount: databaseListener.allPosts.length,
-                itemBuilder: (context, index) {
-                  final post = databaseListener.allPosts[index];
-                  return Posttile(
-                    post: post,
-                    onUserTap: () => navigateToUserProfile(context, post.uid),
-                    onPostTap: ()=>navigateToPost(context, post),
-                  );
-                },
-              ),
     );
   }
 
   Future<void> loadAllPosts() async {
     await databaseProvider.getAllPosts();
   }
+
+  Widget _buildPostList(List<Post> posts){
+    return posts.isEmpty
+        ? Center(child: Text("Nothing to show up here!"))
+        : ListView.builder(
+      itemCount: posts.length,
+      itemBuilder: (context, index) {
+        final post = posts[index];
+        return Posttile(
+          post: post,
+          onUserTap: () => navigateToUserProfile(context, post.uid),
+          onPostTap: ()=>navigateToPost(context, post),
+        );
+      },
+    );
+  }
 }
+
+

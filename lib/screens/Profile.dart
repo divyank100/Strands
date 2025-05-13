@@ -2,14 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:threads_clone/components/BioBox.dart';
+import 'package:threads_clone/components/FollowButton.dart';
 import 'package:threads_clone/components/InputAlertBox.dart';
 import 'package:threads_clone/components/PostTile.dart';
+import 'package:threads_clone/components/ProfileStats.dart';
 import 'package:threads_clone/models/user.dart';
 import 'package:threads_clone/screens/Settings.dart';
 import 'package:threads_clone/services/auth/auth_service.dart';
 import 'package:threads_clone/services/database/database_provider.dart';
 
 import '../navigation/navigation.dart';
+import 'FollowingList.dart';
 
 class Profile extends StatefulWidget {
   String uid;
@@ -31,6 +34,7 @@ class _ProfileState extends State<Profile> {
   UserProfile? user;
   String currentUserId = AuthService().getCurrentUserId();
   bool isLoading = true;
+  bool isFollowing = false;
 
   @override
   void initState() {
@@ -38,8 +42,43 @@ class _ProfileState extends State<Profile> {
     loadUser();
   }
 
+  Future<void> toggleFollow() async {
+    if (isFollowing) {
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: Text("Unfollow"),
+              content: Text("Are you sure you want to unfollow this user?"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Cancel"),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await databaseProvider.unfollowUser(widget.uid);
+                  },
+                  child: Text("Yes"),
+                ),
+              ],
+            ),
+      );
+    } else {
+      await databaseProvider.followUser(widget.uid);
+    }
+
+    setState(() {
+      isFollowing = !isFollowing;
+    });
+  }
+
   Future<void> loadUser() async {
     user = await databaseProvider.userProfile(widget.uid);
+    await databaseProvider.loadUserFollowing(widget.uid);
+    await databaseProvider.loadUserFollowers(widget.uid);
+    isFollowing = databaseProvider.isFollowing(widget.uid);
     setState(() {
       isLoading = false;
     });
@@ -47,25 +86,18 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final userAllPosts = listeningProvider.filterPost(currentUserId);
+    final userAllPosts = listeningProvider.filterPost(widget.uid);
+    final followingCount = listeningProvider.getFollowingCount(widget.uid);
+    final followersCount = listeningProvider.getFollowersCount(widget.uid);
+    print("UID --- ${widget.uid}");
+    isFollowing = listeningProvider.isFollowing(widget.uid);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(isLoading ? "" : user!.name),
         foregroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-            onPressed:
-                () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Settings()),
-                  ),
-                },
-            icon: Icon(Icons.settings),
-          ),
-        ],
+        // leading: IconButton(onPressed: ()=>navigateToAllPosts(context), icon: Icon(Icons.arrow_back)),
       ),
       body: ListView(
         children: [
@@ -95,6 +127,12 @@ class _ProfileState extends State<Profile> {
 
           SizedBox(height: 25),
 
+          ProfileStats(postCount: userAllPosts.length, followingCount: followingCount, followersCount: followersCount,onTap: ()=>Navigator.push(context, MaterialPageRoute(builder:(context)=>FollowingList(uid: widget.uid,))),),
+
+          if (user != null && user!.uid != currentUserId)
+            FollowButton(onPressed: toggleFollow, isFollowing: isFollowing),
+          SizedBox(height: 20),
+
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: Row(
@@ -107,7 +145,7 @@ class _ProfileState extends State<Profile> {
                     fontSize: 16,
                   ),
                 ),
-                if (user !=null && user!.uid == currentUserId)
+                if (user != null && user!.uid == currentUserId)
                   GestureDetector(
                     onTap: showEditBio,
                     child: Icon(
@@ -139,7 +177,7 @@ class _ProfileState extends State<Profile> {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  final post = listeningProvider.allPosts[index];
+                  final post = userAllPosts[index];
                   return Posttile(
                     post: post,
                     onUserTap: () {},

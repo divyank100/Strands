@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:threads_clone/components/InputAlertBox.dart';
 import 'package:threads_clone/services/auth/auth_service.dart';
 import 'package:threads_clone/services/database/database_provider.dart';
+import '../helper/timestamp_formartter.dart';
 import '../models/post.dart';
 
 class Posttile extends StatefulWidget {
@@ -123,7 +124,7 @@ class _PosttileState extends State<Posttile> {
                 ListTile(
                   leading: Icon(Icons.block),
                   title: Text("Block User"),
-                  onTap: () async{
+                  onTap: () async {
                     Navigator.pop(context);
                     blockUserConfirmation();
                   },
@@ -285,8 +286,14 @@ class _PosttileState extends State<Posttile> {
                     ],
                   ),
                 ),
+                Spacer(),
+                Text(
+                  formatTimestamp(widget.post.timestamp),
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
               ],
             ),
+
           ],
         ),
       ),
