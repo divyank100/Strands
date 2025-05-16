@@ -1,7 +1,8 @@
 
 ## Strands
 
-![Video]([https://collection.cloudinary.com/dotwo3rdr/61f351514137ae8a0dc6849bb8511339?](https://player.cloudinary.com/embed/?cloud_name=dotwo3rdr&public_id=Screenrecording_20250516_153603_zfrtjm&profile=cld-default))
+[![Watch the demo video](https://res.cloudinary.com/dotwo3rdr/video/upload/so_2/Screenrecording_20250516_153603_zfrtjm.jpg)](https://player.cloudinary.com/embed/?cloud_name=dotwo3rdr&public_id=Screenrecording_20250516_153603_zfrtjm&profile=cld-default)
+
 
 A Flutter-based thread-clone application where users can create posts, comment, like, follow/unfollow others, and add a bio. Authentication and backend services are powered by Firebase Auth.
 
